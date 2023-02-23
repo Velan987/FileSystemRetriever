@@ -1,0 +1,52 @@
+buildscript {
+	repositories {
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath "gradle.plugin.org.jenkins-ci.tools:gradle-jpi-plugin:0.22.0"
+	}
+}
+
+apply plugin: "org.jenkins-ci.jpi"
+apply plugin: "eclipse"
+
+group = "com.jenkins.plugins"
+version = "0.0.1"
+description = "Plugin to retrieve files from local directory and load it as shared library"
+
+jenkinsPlugin {
+	coreVersion = "1.580.1"
+	displayName = "FileSystemRetriever"
+	developers {
+		developer {
+			id "velan987"
+			name "Velan K"
+			email "velan987@gmail.com"
+		}
+	}
+}
+
+ext {
+	workflowVersion = "2.21"
+	jenkinsVersion = "2.249"
+}
+
+repositories {
+	maven { url "https://repo.jenkins-ci.org/releases/" }
+}
+
+dependencies {
+
+	
+	jenkinsPlugins "org.jenkins-ci.plugins.workflow:workflow-cps:${workflowVersion}@jar"
+	jenkinsPlugins "org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:${workflowVersion}@jar"
+	jenkinsPlugins "org.jenkins-ci.plugins.workflow:workflow-job:${workflowVersion}@jar"
+	
+	compile "org.jenkins-ci.main:jenkins-core:${jenkinsVersion}@jar"
+}
+
+sourceCompatibility = "1.8"
+
+task wrapper(type: Wrapper) {
+	gradleVersion = "4.2.1"
+}
